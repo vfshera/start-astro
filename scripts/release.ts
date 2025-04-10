@@ -33,7 +33,10 @@ const templatesDir = path.join(scriptDir, "templates");
           await generateTemplate(
             t,
             path.join(scriptDir, "..", BUILD_TEMPLATES_DIR, t.name),
-            path.join(scriptDir, BLANK_TEMPLATE_NAME)
+            path.join(scriptDir, BLANK_TEMPLATE_NAME),
+            t.extends.length
+              ? templates.filter((tem) => t.extends.includes(tem.name))
+              : []
           );
 
           return `${t.title} created!`;

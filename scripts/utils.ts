@@ -68,23 +68,40 @@ export function sortPackageJson(pkg: Record<string, unknown>) {
   );
 }
 
-export async function generateTemplate(
-  template: Template & { path: string },
-  destinationDir: string,
-  starterPath: string
-) {
-  const contents = (
-    await glob(`${template.path}/**/*`, {
-      ignore: [`${template.path}/template.json`],
-    })
-  ).map((f) => {
-    const relativePath = path.relative(template.path, f);
+type TemplateWithPath = Template & { path: string };
 
-    return {
-      from: path.join(template.path, relativePath),
-      to: path.join(destinationDir, relativePath),
-    };
-  });
+export async function generateTemplate(
+  template: TemplateWithPath,
+  destinationDir: string,
+  starterPath: string,
+  extendedTemplates: TemplateWithPath[] = []
+) {
+  const _templates = [...extendedTemplates, template];
+
+  const contents: { from: string; to: string }[] = [];
+
+  const dependencies = [...new Set(_templates.flatMap((t) => t.dependencies))];
+
+  const devDependencies = [
+    ...new Set(_templates.flatMap((t) => t.devDependencies)),
+  ];
+
+  for (const t of _templates) {
+    const result = await glob(`${t.path}/**/*`, {
+      ignore: [`${t.path}/template.json`],
+    });
+
+    const tcontents = result.map((f) => {
+      const relativePath = path.relative(t.path, f);
+
+      return {
+        from: path.join(t.path, relativePath),
+        to: path.join(destinationDir, relativePath),
+      };
+    });
+
+    contents.push(...tcontents);
+  }
 
   await x("cp", ["-r", starterPath, destinationDir]);
   await sleep(500);
@@ -99,17 +116,17 @@ export async function generateTemplate(
     await sleep(200);
   }
 
-  if (template.dependencies.length) {
+  if (dependencies.length) {
     s.start("installing dependencies");
-    await x("pnpm", ["add", ...template.dependencies], {
+    await x("pnpm", ["add", ...dependencies], {
       nodeOptions: { cwd: destinationDir },
     });
     s.stop("dependencies installed!");
   }
 
-  if (template.devDependencies.length) {
+  if (devDependencies.length) {
     s.start("installing dev dependencies");
-    await x("pnpm", ["add", "-D", ...template.devDependencies], {
+    await x("pnpm", ["add", "-D", ...devDependencies], {
       nodeOptions: { cwd: destinationDir },
     });
     s.stop("dev dependencies installed!");
@@ -220,7 +237,7 @@ export async function prepare(scriptDir: string) {
 }
 
 export async function loadTemplates(templatesDir: string) {
-  const templates = await glob(`${templatesDir}/*/template.json`);
+  const templates = [...new Set(await glob(`${templatesDir}/*/template.json`))];
 
   return Promise.all(
     templates.map(async (template) => {
