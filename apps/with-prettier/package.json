@@ -1,6 +1,5 @@
 {
   "name": "with-prettier",
-  "description": "Prettier integration to Astro",
   "version": "0.0.1",
   "type": "module",
   "scripts": {

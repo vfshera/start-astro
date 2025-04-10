@@ -1,6 +1,5 @@
 {
   "name": "with-eslint",
-  "description": "Eslint integration to Astro",
   "version": "0.0.1",
   "type": "module",
   "scripts": {

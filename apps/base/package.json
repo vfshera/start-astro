@@ -1,6 +1,5 @@
 {
   "name": "base",
-  "description": "Astro base template",
   "version": "0.0.1",
   "type": "module",
   "scripts": {
