@@ -151,7 +151,6 @@ export async function generateTemplate(
       sortPackageJson({
         ...packageJsonContents,
         name: template.name,
-        description: template.description,
       }),
       null,
       2
