@@ -1,0 +1,23 @@
+---
+import type { ComponentProps } from "astro/types";
+import BaseLayout from "./Base.astro";
+import TheNavbar from "~/components/TheNavbar.astro";
+import TheFooter from "~/components/TheFooter.astro";
+
+interface Props extends ComponentProps<typeof BaseLayout> {}
+
+const { class: className, "class:list": classList, ...props } = Astro.props;
+---
+
+<BaseLayout
+   
+  {...props}
+  class:list={["flex min-h-full flex-col", classList, className]}
+>
+  <slot name="head" slot="head" />
+  <TheNavbar />
+  <main class="flex-1">
+    <slot />
+  </main>
+  <TheFooter />
+</BaseLayout>
