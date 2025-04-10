@@ -1,0 +1,50 @@
+---
+import "~/styles/global.css";
+import { SEO } from "astro-seo";
+import type { Props as AstroSEOProps } from "astro-seo";
+import { site } from "~/constants/config";
+
+interface Props extends AstroSEOProps {
+  /**
+   * Applied to html body
+   */
+  class?: astroHTML.JSX.HTMLAttributes["class"];
+  /**
+   * Applied to html body
+   */
+  "class:list"?: astroHTML.JSX.HTMLAttributes["class:list"];
+  /**
+   * Language of the document
+   */
+  lang?: string;
+}
+const {
+  title,
+  description,
+  class: className,
+  "class:list": classList,
+  lang = "en",
+  ...props
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <SEO
+      title={title}
+      titleDefault={site.title}
+      titleTemplate={`%s - ${site.title}`}
+      description={description || site.description}
+      {...props}
+    />
+    <slot name="head" />
+  </head>
+  <body class:list={[classList, className]}>
+    <slot />
+  </body>
+</html>

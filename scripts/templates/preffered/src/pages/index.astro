@@ -1,0 +1,23 @@
+---
+import Layout from "~/layouts/Layout.astro";
+
+const preconfigurations: string[] = [
+  "Tailwind CSS",
+  "Prettier",
+  "ESLint",
+  "SEO",
+];
+---
+
+<Layout>
+  <div class="pt-[40vh]">
+    <p class="text-center text-xl font-medium mb-5">
+      Start your coding journey with now!
+    </p>
+
+    <p class="text-center text-lg">Preconfigured with:</p>
+    <ul>
+      {preconfigurations.map((item) => <li class="text-center">{item}</li>)}
+    </ul>
+  </div>
+</Layout>

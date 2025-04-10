@@ -1,0 +1,8 @@
+{
+  "name": "preffered",
+  "title": "Preffered",
+  "description": "Preffered starter template",
+  "dependencies": ["astro-seo"],
+  "devDependencies": ["tailwindcss", "@tailwindcss/vite"],
+  "extends": ["with-eslint", "with-prettier"]
+}
