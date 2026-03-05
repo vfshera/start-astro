@@ -1,15 +1,16 @@
 import astroEslintParser from "astro-eslint-parser";
 import tseslint from "typescript-eslint";
-import typescriptEslintParser from "@typescript-eslint/parser";
 import astroPlugin from "eslint-plugin-astro";
 import globals from "globals";
+import { defineConfig } from "eslint/config";
+import eslintConfigPrettier from "eslint-config-prettier";
 
-export default tseslint.config(
+export default defineConfig([
   {
     ignores: ["dist", ".astro"],
   },
-  ...astroPlugin.configs.recommended,
-  ...tseslint.configs.recommended,
+  astroPlugin.configs.recommended,
+  tseslint.configs.recommended,
   {
     files: ["**/*.{js,ts}"],
     languageOptions: {
@@ -17,7 +18,7 @@ export default tseslint.config(
         ...globals.serviceworker,
         ...globals.browser,
       },
-      parser: typescriptEslintParser,
+      parser: tseslint.parser,
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
@@ -30,7 +31,7 @@ export default tseslint.config(
     languageOptions: {
       parser: astroEslintParser,
       parserOptions: {
-        parser: typescriptEslintParser,
+        parser: tseslint.parser,
         extraFileExtensions: [".astro"],
       },
     },
@@ -54,5 +55,6 @@ export default tseslint.config(
         },
       ],
     },
-  }
-);
+  },
+  eslintConfigPrettier,
+]);
