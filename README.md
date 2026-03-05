@@ -1,7 +1,7 @@
 # Start Astro
 
-
 ## Create your new Astro project by running.
+
 ```sh
 pnpm create astro@latest --template vfshera/start-astro
 ```

@@ -1,7 +1,6 @@
 ---
 import "~/styles/global.css";
-import { SEO } from "astro-seo";
-import type { Props as AstroSEOProps } from "astro-seo";
+import { SEO, type Props as AstroSEOProps } from "astro-seo";
 import { site } from "~/constants/config";
 
 interface Props extends AstroSEOProps {
@@ -18,6 +17,7 @@ interface Props extends AstroSEOProps {
    */
   lang?: string;
 }
+
 const {
   title,
   description,
