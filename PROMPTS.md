@@ -1,5 +1,7 @@
 # AI Prompts
 
+> **Note for AI:** Before creating any files, check if they already exist. If they do, ask the user for confirmation before overwriting, or offer to merge/back up instead.
+
 ## 1. Add ESLint
 
 Add ESLint to an Astro project using ESLint 10 flat config format.
