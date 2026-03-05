@@ -1,14 +1,24 @@
 # Start Astro
-Starter templates for Astro
- 
 
-| Template                | Description                                           |
-| :--------------------- | :----------------------------------------------- | 
-| [Astro base template](https://github.com/vfshera/start-astro/tree/main/apps/base) | Astro base template |
-| [Astro + Eslint](https://github.com/vfshera/start-astro/tree/main/apps/with-eslint) | Eslint integration to Astro |
-| [Preffered](https://github.com/vfshera/start-astro/tree/main/apps/preffered) | Preffered starter template |
-| [Astro + Prettier](https://github.com/vfshera/start-astro/tree/main/apps/with-prettier) | Prettier integration to Astro |
 
-  > Updated on 4/11/2025
+## Create your new Astro project by running.
+```sh
+pnpm create astro@latest --template vfshera/start-astro
+```
 
-  License [MIT](https://github.com/vfshera/start-astro/blob/main/LICENSE)
+## 🧞 Commands
+
+All commands are run from the root of the project, from a terminal:
+
+| Command                | Action                                           |
+| :--------------------- | :----------------------------------------------- |
+| `pnpm install`         | Installs dependencies                            |
+| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
+| `pnpm build`           | Build your production site to `./dist/`          |
+| `pnpm preview`         | Preview your build locally, before deploying     |
+| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+
+## 👀 Want to learn more?
+
+Feel free to check Astro [documentation](https://docs.astro.build) or [Discord server](https://astro.build/chat).

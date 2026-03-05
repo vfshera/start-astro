@@ -1,6 +1,0 @@
-{
-  "name": "with-prettier",
-  "title": "Astro + Prettier",
-  "description": "Prettier integration to Astro",
-  "devDependencies": ["prettier", "prettier-plugin-astro"]
-}

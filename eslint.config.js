@@ -6,7 +6,7 @@ import globals from "globals";
 
 export default tseslint.config(
   {
-    ignores: ["**/dist", "**/.astro", "**/node_modules", "!scripts"],
+    ignores: ["dist", ".astro"],
   },
   ...astroPlugin.configs.recommended,
   ...tseslint.configs.recommended,
@@ -41,20 +41,6 @@ export default tseslint.config(
   },
   {
     rules: {
-      "padding-line-between-statements": [
-        "warn",
-        { blankLine: "always", prev: "*", next: ["return", "export"] },
-        {
-          blankLine: "always",
-          prev: ["const", "let", "var", "block-like", "export"],
-          next: "*",
-        },
-        {
-          blankLine: "always",
-          prev: ["const", "let", "var", "block-like", "export"],
-          next: ["const", "let", "var", "block-like", "export"],
-        },
-      ],
       "no-console": "warn",
       "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": [
