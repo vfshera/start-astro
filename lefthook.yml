@@ -1,0 +1,10 @@
+pre-commit:
+  jobs:
+    - name: lint
+      run: pnpm exec eslint --fix {staged_files}
+      glob: "*.{js,ts,jsx,tsx,astro}"
+      stage_fixed: true
+
+    - name: format
+      run: pnpm exec prettier --write --ignore-unknown {staged_files}
+      stage_fixed: true
