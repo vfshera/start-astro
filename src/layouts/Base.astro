@@ -2,6 +2,8 @@
 import "~/styles/global.css";
 import { SEO, type Props as AstroSEOProps } from "astro-seo";
 import { site } from "~/constants/config";
+import { createStructuredData } from "~/lib/structured-data";
+import type { StructuredData } from "~/types";
 
 interface Props extends AstroSEOProps {
   /**
@@ -16,6 +18,7 @@ interface Props extends AstroSEOProps {
    * Language of the document
    */
   lang?: string;
+  structuredData?: StructuredData[] | false;
 }
 
 const {
@@ -24,8 +27,17 @@ const {
   class: className,
   "class:list": classList,
   lang = "en",
+  structuredData: givenData,
   ...props
 } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site!);
+
+const structuredData = createStructuredData({
+  name: title || site.title,
+  url: canonical,
+  data: givenData || [],
+});
 ---
 
 <!doctype html>
@@ -34,7 +46,7 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
+    <link rel="canonical" href={canonical} />
     <SEO
       title={title}
       titleDefault={site.title}
@@ -42,6 +54,15 @@ const {
       description={description || site.description}
       {...props}
     />
+    {
+      givenData != false && (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={JSON.stringify(structuredData)}
+        />
+      )
+    }
     <slot name="head" />
   </head>
   <body class:list={[classList, className]}>
