@@ -10,7 +10,6 @@ const { class: className, "class:list": classList, ...props } = Astro.props;
 ---
 
 <BaseLayout
-   
   {...props}
   class:list={["flex min-h-full flex-col", classList, className]}
 >
