@@ -1,16 +1,18 @@
-import astroEslintParser from "astro-eslint-parser";
+import * as astroParser from "astro-eslint-parser";
 import tseslint from "typescript-eslint";
 import astroPlugin from "eslint-plugin-astro";
 import globals from "globals";
-import { defineConfig } from "eslint/config";
 import eslintConfigPrettier from "eslint-config-prettier";
+import stylistic from "@stylistic/eslint-plugin";
+import { defineConfig } from "eslint/config";
 
-export default defineConfig([
+export default defineConfig(
   {
-    ignores: ["dist", ".astro"],
+    ignores: ["dist", ".astro", "pnpm-lock.yaml", "bun.lock"],
   },
   astroPlugin.configs.recommended,
   tseslint.configs.recommended,
+  stylistic.configs.recommended,
   {
     files: ["**/*.{js,ts}"],
     languageOptions: {
@@ -18,7 +20,7 @@ export default defineConfig([
         ...globals.serviceworker,
         ...globals.browser,
       },
-      parser: tseslint.parser,
+
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
@@ -29,7 +31,7 @@ export default defineConfig([
   {
     files: ["**/*.astro"],
     languageOptions: {
-      parser: astroEslintParser,
+      parser: astroParser,
       parserOptions: {
         parser: tseslint.parser,
         extraFileExtensions: [".astro"],
@@ -37,7 +39,6 @@ export default defineConfig([
     },
     rules: {
       "@typescript-eslint/no-empty-object-type": "off",
-      "@typescript-eslint/no-explicit-any": "off",
     },
   },
   {
@@ -54,7 +55,86 @@ export default defineConfig([
           destructuredArrayIgnorePattern: "^_",
         },
       ],
+      "@stylistic/padding-line-between-statements": [
+        "warn",
+
+        // Imports
+        {
+          blankLine: "always",
+          prev: "import",
+          next: "*",
+        },
+        {
+          blankLine: "any",
+          prev: "import",
+          next: "import",
+        },
+
+        // Blank line before exports
+        {
+          blankLine: "always",
+          prev: "*",
+          next: "export",
+        },
+
+        // Blank line after exports
+        {
+          blankLine: "always",
+          prev: "export",
+          next: "*",
+        },
+
+        // Types/interfaces
+        {
+          blankLine: "always",
+          prev: ["type", "interface"],
+          next: "*",
+        },
+        {
+          blankLine: "any",
+          prev: ["type", "interface"],
+          next: ["type", "interface"],
+        },
+        {
+          blankLine: "always",
+          prev: "*",
+          next: ["type", "interface"],
+        },
+
+        // Functions
+        {
+          blankLine: "always",
+          prev: "function",
+          next: "function",
+        },
+
+        // After block-like statements
+        {
+          blankLine: "always",
+          prev: "block-like",
+          next: "*",
+        },
+        {
+          blankLine: "any",
+          prev: "block-like",
+          next: "block-like",
+        },
+
+        // Before return
+        {
+          blankLine: "always",
+          prev: "*",
+          next: "return",
+        },
+
+        // Before throw
+        {
+          blankLine: "always",
+          prev: "*",
+          next: "throw",
+        },
+      ],
     },
   },
   eslintConfigPrettier,
-]);
+);
